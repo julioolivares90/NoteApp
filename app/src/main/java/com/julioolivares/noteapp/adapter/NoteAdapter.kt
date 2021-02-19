@@ -1,14 +1,18 @@
 package com.julioolivares.noteapp.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.julioolivares.noteapp.databinding.RowNoteBinding
+import com.julioolivares.noteapp.fragment.home.HomeFragmentDirections
 import com.julioolivares.noteapp.model.Note
 import com.julioolivares.noteapp.viewModel.NoteViewModel
+import kotlin.random.Random
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
@@ -41,7 +45,21 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
         holder.itemView.apply {
             binding?.tvNoteTitle?.text = currentNote.noteTitle
+
+            val random = java.util.Random()
+
+            val color = Color.rgb(random.nextInt(256),
+                    random.nextInt(256),
+                    random.nextInt(256))
+
+            binding?.tvNoteTitle?.setBackgroundColor(color)
+
+            binding?.tvNoteTitle?.setTextColor(Color.rgb(0,0,0))
+
             binding?.tvNoteBody?.text = currentNote.noteBody
+        }.setOnClickListener {mView->
+            val direction = HomeFragmentDirections.actionHomeFragmentToUpdateNoteFragment(currentNote)
+            Navigation.findNavController(mView).navigate(direction)
         }
     }
 

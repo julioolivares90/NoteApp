@@ -37,6 +37,7 @@ class NewNoteFragment : Fragment(R.layout.new_note_fragment) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = NewNoteFragmentBinding.inflate(inflater,container,false)
         return binding!!.root
     }
@@ -45,6 +46,10 @@ class NewNoteFragment : Fragment(R.layout.new_note_fragment) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).noteViewModel
         mView = view
+
+        binding?.faCrearNota?.setOnClickListener {
+            saveNote(mView)
+        }
     }
 
     private fun saveNote(view: View){
